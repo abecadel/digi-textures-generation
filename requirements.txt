@@ -1,22 +1,13 @@
-pybind11[global]
-mediapipe
-face_alignment 
-pybind11 
-scikit-image 
-jupyter
-scikit-image 
-matplotlib 
-imageio 
-plotly 
+transformers
+diffusers
+accelerate
+huggingface-hub
+ninja
+xatlas
+imageio
+matplotlib
+pyrallis
+loguru
+tqdm
+einops
 opencv-python
-black 
-usort 
-flake8 
-flake8-bugbear 
-flake8-comprehensions
-pytest
-transformers==4.19.2 --prefer-binary
-diffusers --prefer-binary
-invisible-watermark --prefer-binary
-git+https://github.com/crowsonkb/k-diffusion.git --prefer-binary
-git+https://github.com/TencentARC/GFPGAN.git --prefer-binary

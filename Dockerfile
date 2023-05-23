@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:11.7.0-cudnn8-devel-ubuntu22.04
 WORKDIR /app
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -13,30 +13,14 @@ RUN wget \
     https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh \
     && mkdir /root/.conda \
     && bash Miniconda3-latest-Linux-x86_64.sh -b \
-    && rm -f Miniconda3-latest-Linux-x86_64.sh 
+    && rm -f Miniconda3-latest-Linux-x86_64.sh
 RUN conda update -n base -c defaults conda -y
 RUN conda init
-RUN conda create --name digi python=3.10
+RUN conda create --name digi python=3.9
 
 SHELL ["conda", "run", "--no-capture-output", "-n", "digi", "/bin/bash", "-c"]
-RUN conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-RUN conda install xformers -c xformers -y
+RUN conda install pytorch=1.13.1 torchvision pytorch-cuda=11.7 -c pytorch -c nvidia
+RUN pip install kaolin==0.13.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-1.13.1_cu117.html
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
-
-#install stable diffusion
-RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-WORKDIR stable-diffusion-webui
-RUN mkdir repositories
-RUN git clone https://github.com/CompVis/stable-diffusion.git repositories/stable-diffusion
-RUN git clone https://github.com/CompVis/taming-transformers.git repositories/taming-transformers
-RUN git clone https://github.com/sczhou/CodeFormer.git repositories/CodeFormer
-RUN git clone https://github.com/salesforce/BLIP.git repositories/BLIP
-RUN pip install -r repositories/CodeFormer/requirements.txt --prefer-binary
-RUN pip install -r requirements.txt --prefer-binary
-
-
-#install controlnet
-WORKDIR /app
-RUN git clone https://github.com/Mikubill/sd-webui-controlnet.git
