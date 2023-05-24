@@ -1,0 +1,118 @@
+version: "3.4"
+
+services:
+
+  reverse_proxy:
+    depends_on:
+      - www
+      - s3www
+      - api
+    build:
+      context: .
+      dockerfile: Dockerfile.reverseproxy
+    ports:
+      - "80:80"
+      - "8000:8000"
+
+  api:
+    depends_on:
+      - minio
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    volumes:
+      - .:/app/
+    environment:
+      AWS_S3_ENDPOINT: http://minio:9000
+      AWS_ACCESS_KEY_ID: admin
+      AWS_SECRET_ACCESS_KEY: adminadmin
+      AWS_S3_BUCKET: images
+      PORT: 8000
+      MONGODB_URL: mongodb://test:test@mongo:27017/test
+      ANALYSIS_API: http://segmentation_service_api:8002
+
+  segmentation_service_api:
+    build: digi-fashion-segmentation-service/
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./data:/app/data
+    environment:
+      PORT: 8002
+      AWS_S3_ENDPOINT: http://minio:9000
+      AWS_ACCESS_KEY_ID: admin
+      AWS_SECRET_ACCESS_KEY: adminadmin
+      AWS_S3_BUCKET: images
+      MONGODB_URL: mongodb://test:test@mongo:27017/test
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  www:
+    depends_on:
+      - api
+    build: www/
+    restart: always
+    environment:
+      - PORT=3000
+      - API_URL=http://api:8000
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - mongodb_data:/data/db
+
+  minio:
+    image: quay.io/minio/minio:latest
+    command: server --console-address ":9001" /data
+    volumes:
+      - minio_storage:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: adminadmin
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  create_bucket:
+    depends_on:
+      - minio
+    image: quay.io/minio/mc
+    entrypoint: >
+      /bin/sh -c "
+        /usr/bin/mc config host add minio http://minio:9000 admin adminadmin;
+        /usr/bin/mc mb -p minio/images;
+        exit 0;
+      "
+
+  s3www:
+    depends_on:
+      - minio
+      - create_bucket
+    image: y4m4/s3www:latest
+    environment:
+      S3WWW_ENDPOINT: http://minio:9000
+      S3WWW_ACCESS_KEY: admin
+      S3WWW_SECRET_KEY: adminadmin
+      S3WWW_BUCKET: images
+      S3WWW_ADDRESS: 0.0.0.0:80
+
+volumes:
+  minio_storage:
+  mongodb_data:
