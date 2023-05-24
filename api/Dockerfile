@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 ENV DEBIAN_FRONTEND=noninteractive
 
 ENV PORT 8000
@@ -8,6 +8,6 @@ WORKDIR $APP_HOME
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY digi_stylist digi_stylist
+COPY src src
 COPY .env* .
-CMD gunicorn digi_stylist.api:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
+CMD gunicorn src.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT

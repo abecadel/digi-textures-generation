@@ -3,7 +3,6 @@ import type { ReactElement } from "react";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
 import NextLink from "next/link";
-import { Formik } from "src/pages/forms/formik";
 import { Helmet } from "react-helmet-async";
 
 import {
@@ -23,6 +22,7 @@ import {
 import { spacing } from "@mui/system";
 
 import DashboardLayout from "../../layouts/Dashboard";
+import { Formik } from "formik";
 
 const Divider = styled(MuiDivider)(spacing);
 

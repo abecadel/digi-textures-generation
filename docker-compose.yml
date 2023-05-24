@@ -19,7 +19,7 @@ services:
       GENERATION_API: http://generation_service_:8000
 
   generation_service:
-    build: digi-fashion-segmentation-service/
+    build: generation_service/
     ports:
       - "8000:8002"
     volumes:
@@ -48,8 +48,8 @@ services:
   mongo:
     image: mongo
     restart: always
-    ports:
-      - "27017:27017"
+#    ports:
+#      - "27017:27017"
     environment:
       MONGO_INITDB_DATABASE: test
       MONGO_INITDB_ROOT_USERNAME: root
@@ -63,9 +63,9 @@ services:
     command: server --console-address ":9001" /data
     volumes:
       - minio_storage:/data
-    ports:
-      - "9000:9000"
-      - "9001:9001"
+#    ports:
+#      - "9000:9000"
+#      - "9001:9001"
     environment:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: adminadmin
