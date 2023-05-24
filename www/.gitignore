@@ -45,3 +45,5 @@ tsconfig.tsbuildinfo
 .yarn
 .pnp.cjs
 .pnp.loader.mjs
+.env
+.yarnrc.yml
