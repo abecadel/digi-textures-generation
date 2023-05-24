@@ -2,49 +2,34 @@ version: "3.4"
 
 services:
 
-  reverse_proxy:
-    depends_on:
-      - www
-      - s3www
-      - api
-    build:
-      context: .
-      dockerfile: Dockerfile.reverseproxy
-    ports:
-      - "80:80"
-      - "8000:8000"
-
   api:
     depends_on:
       - minio
       - mongo
-    build:
-      context: .
-      dockerfile: Dockerfile.api
+    build: api/
     volumes:
       - .:/app/
     environment:
       AWS_S3_ENDPOINT: http://minio:9000
       AWS_ACCESS_KEY_ID: admin
       AWS_SECRET_ACCESS_KEY: adminadmin
-      AWS_S3_BUCKET: images
+      AWS_S3_BUCKET: test
       PORT: 8000
       MONGODB_URL: mongodb://test:test@mongo:27017/test
-      ANALYSIS_API: http://segmentation_service_api:8002
+      GENERATION_API: http://generation_service_:8000
 
-  segmentation_service_api:
+  generation_service:
     build: digi-fashion-segmentation-service/
     ports:
-      - "8002:8002"
+      - "8000:8002"
     volumes:
       - ./data:/app/data
     environment:
-      PORT: 8002
+      PORT: 8000
       AWS_S3_ENDPOINT: http://minio:9000
       AWS_ACCESS_KEY_ID: admin
       AWS_SECRET_ACCESS_KEY: adminadmin
-      AWS_S3_BUCKET: images
-      MONGODB_URL: mongodb://test:test@mongo:27017/test
+      AWS_S3_BUCKET: test
     deploy:
       resources:
         reservations:
@@ -97,7 +82,7 @@ services:
     entrypoint: >
       /bin/sh -c "
         /usr/bin/mc config host add minio http://minio:9000 admin adminadmin;
-        /usr/bin/mc mb -p minio/images;
+        /usr/bin/mc mb -p minio/test;
         exit 0;
       "
 
@@ -110,7 +95,7 @@ services:
       S3WWW_ENDPOINT: http://minio:9000
       S3WWW_ACCESS_KEY: admin
       S3WWW_SECRET_KEY: adminadmin
-      S3WWW_BUCKET: images
+      S3WWW_BUCKET: test
       S3WWW_ADDRESS: 0.0.0.0:80
 
 volumes:
