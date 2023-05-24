@@ -41,6 +41,8 @@ services:
       - api
     build: www/
     restart: always
+    ports:
+      - "3000:3000"
     environment:
       - PORT=3000
       - API_URL=http://api:8000

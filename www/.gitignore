@@ -41,3 +41,7 @@ yarn.lock
 
 # typescript
 tsconfig.tsbuildinfo
+
+.yarn
+.pnp.cjs
+.pnp.loader.mjs
