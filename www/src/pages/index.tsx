@@ -1,22 +1,24 @@
+import type {ReactElement} from "react";
 import React from "react";
-import type { ReactElement } from "react";
 import styled from "@emotion/styled";
-import { Helmet } from "react-helmet-async";
 
-import { Avatar, Paper, Typography } from "@mui/material";
+import {Paper} from "@mui/material";
 
 import AuthLayout from "../layouts/Auth";
 
 import SignInComponent from "../components/auth/SignIn";
 
-import Logo from "../vendor/logo.svg";
+import useAuth from "../hooks/useAuth";
+import {useRouter} from "next/router";
 
-const Brand = styled(Logo)`
-  fill: ${(props) => props.theme.palette.primary.main};
-  width: 64px;
-  height: 64px;
+const logo = "/static/img/logo_digimans.png";
+
+const Brand = styled.img`
+  width: 18rem;
+  height: 18rem;
   margin-bottom: 32px;
 `;
+
 
 const Wrapper = styled(Paper)`
   padding: ${(props) => props.theme.spacing(6)};
@@ -27,11 +29,17 @@ const Wrapper = styled(Paper)`
 `;
 
 function SignIn() {
+    const {isAuthenticated} = useAuth();
+    const router = useRouter();
+    if (isAuthenticated) {
+        router.push("/dashboard/default");
+    }
+
     return (
         <React.Fragment>
-            <Brand />
+            <Brand src={logo}/>
             <Wrapper>
-                <SignInComponent />
+                <SignInComponent/>
             </Wrapper>
         </React.Fragment>
     );
