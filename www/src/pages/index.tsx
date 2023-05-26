@@ -1,34 +1,44 @@
 import React from "react";
 import type { ReactElement } from "react";
+import styled from "@emotion/styled";
+import { Helmet } from "react-helmet-async";
 
-import PresentationLayout from "../layouts/Presentation";
+import { Avatar, Paper, Typography } from "@mui/material";
 
-import AppBar from "../components/pages/landing/AppBar";
-import Introduction from "../components/pages/landing/Introduction";
-import Demos from "../components/pages/landing/Demos";
-import Testimonial from "../components/pages/landing/Testimonial";
-import Integrations from "../components/pages/landing/Integrations";
-import Features from "../components/pages/landing/Features";
-import FAQ from "../components/pages/landing/FAQ";
-import JoinUs from "../components/pages/landing/JoinUs";
+import AuthLayout from "../layouts/Auth";
 
-function Presentation() {
-  return (
-    <React.Fragment>
-      <AppBar />
-      <Introduction />
-      <Demos />
-      <Testimonial />
-      <Integrations />
-      <Features />
-      <FAQ />
-      <JoinUs />
-    </React.Fragment>
-  );
+import SignInComponent from "../components/auth/SignIn";
+
+import Logo from "../vendor/logo.svg";
+
+const Brand = styled(Logo)`
+  fill: ${(props) => props.theme.palette.primary.main};
+  width: 64px;
+  height: 64px;
+  margin-bottom: 32px;
+`;
+
+const Wrapper = styled(Paper)`
+  padding: ${(props) => props.theme.spacing(6)};
+
+  ${(props) => props.theme.breakpoints.up("md")} {
+    padding: ${(props) => props.theme.spacing(10)};
+  }
+`;
+
+function SignIn() {
+    return (
+        <React.Fragment>
+            <Brand />
+            <Wrapper>
+                <SignInComponent />
+            </Wrapper>
+        </React.Fragment>
+    );
 }
 
-Presentation.getLayout = function getLayout(page: ReactElement) {
-  return <PresentationLayout>{page}</PresentationLayout>;
+SignIn.getLayout = function getLayout(page: ReactElement) {
+    return <AuthLayout>{page}</AuthLayout>;
 };
 
-export default Presentation;
+export default SignIn;

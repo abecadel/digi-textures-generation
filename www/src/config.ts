@@ -10,11 +10,12 @@ export const firebaseConfig = {
 };
 
 export const auth0Config = {
-  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
-  domain: process.env.REACT_APP_AUTH0_DOMAIN,
+  clientId: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
+  domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN,
+  redirect_url: "localhost:3000/",
 };
 
 export const cognitoConfig = {
-  userPoolId: process.env.REACT_APP_COGNITO_USER_POOL_ID,
+  userPoolId: process.env. REACT_APP_COGNITO_USER_POOL_ID,
   clientId: process.env.REACT_APP_COGNITO_CLIENT_ID,
 };

@@ -22,27 +22,16 @@ const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function SignIn() {
   const router = useRouter();
-  const { signIn } = useAuth();
+  const { loginWithRedirect } = useAuth();
 
   return (
     <Formik
       initialValues={{
-        email: "demo@bootlab.io",
-        password: "unsafepassword",
         submit: false,
       }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email("Must be a valid email")
-          .max(255)
-          .required("Email is required"),
-        password: Yup.string().max(255).required("Password is required"),
-      })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await signIn(values.email, values.password);
-
-          router.push("/private");
+          await loginWithRedirect();
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 
@@ -62,43 +51,11 @@ function SignIn() {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit}>
-          <Alert mt={3} mb={3} severity="info">
-            Use <strong>demo@bootlab.io</strong> and{" "}
-            <strong>unsafepassword</strong> to sign in
-          </Alert>
           {errors.submit && (
             <Alert mt={2} mb={3} severity="warning">
               {errors.submit}
             </Alert>
           )}
-          <TextField
-            type="email"
-            name="email"
-            label="Email Address"
-            value={values.email}
-            error={Boolean(touched.email && errors.email)}
-            fullWidth
-            helperText={touched.email && errors.email}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            my={2}
-          />
-          <TextField
-            type="password"
-            name="password"
-            label="Password"
-            value={values.password}
-            error={Boolean(touched.password && errors.password)}
-            fullWidth
-            helperText={touched.password && errors.password}
-            onBlur={handleBlur}
-            onChange={handleChange}
-            my={2}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -108,11 +65,6 @@ function SignIn() {
           >
             Sign in
           </Button>
-          <Link href="/auth/reset-password">
-            <Button fullWidth color="primary">
-              Forgot password
-            </Button>
-          </Link>
         </form>
       )}
     </Formik>

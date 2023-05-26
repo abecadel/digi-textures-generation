@@ -20,6 +20,7 @@
     "not IE 11"
   ],
   "dependencies": {
+    "@auth0/auth0-react": "^2.1.0",
     "@auth0/auth0-spa-js": "1.22.6",
     "@date-io/date-fns": "2.16.0",
     "@emotion/cache": "11.10.7",

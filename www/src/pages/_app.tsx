@@ -12,9 +12,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import "chart.js/auto";
 
-// Note: Remove the following line if you want to disable the API mocks.
-import "../mocks";
-
 import "../vendor/perfect-scrollbar.css";
 
 import "../i18n";
@@ -25,10 +22,7 @@ import useTheme from "../hooks/useTheme";
 import { store } from "../redux/store";
 import createEmotionCache from "../utils/createEmotionCache";
 
-import { AuthProvider } from "../contexts/JWTContext";
-// import { AuthProvider } from "../contexts/FirebaseAuthContext";
-// import { AuthProvider } from "../contexts/Auth0Context";
-// import { AuthProvider } from "../contexts/CognitoContext";
+import { AuthProvider } from "../contexts/Auth0Context";
 
 const clientSideEmotionCache = createEmotionCache();
 
