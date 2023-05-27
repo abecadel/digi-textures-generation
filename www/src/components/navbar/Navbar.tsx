@@ -108,9 +108,7 @@ function Navbar({ onDrawerToggle }: NavbarProps) {
             </Grid>
             <Grid item xs />
             <Grid item>
-              <NavbarMessagesDropdown />
               <NavbarNotificationsDropdown />
-              <NavbarLanguagesDropdown />
               <NavbarUserDropdown />
             </Grid>
           </Grid>

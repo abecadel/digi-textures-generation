@@ -22,7 +22,7 @@ const IconButton = styled(MuiIconButton)`
 function NavbarUserDropdown() {
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const router = useRouter();
-  const { signOut } = useAuth();
+  const { logout } = useAuth();
 
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
@@ -33,8 +33,8 @@ function NavbarUserDropdown() {
   };
 
   const handleSignOut = async () => {
-    await signOut();
-    router.push("/auth/sign-in");
+    await logout();
+    router.push("/");
   };
 
   return (

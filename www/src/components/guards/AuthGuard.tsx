@@ -9,16 +9,16 @@ interface AuthGuardType {
 
 // For routes that can only be accessed by authenticated users
 function AuthGuard({ children }: AuthGuardType) {
-  const { isAuthenticated, isInitialized } = useAuth();
+  const { isAuthenticated} = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isInitialized && !isAuthenticated) {
-      router.push("/auth/sign-in");
+    if (!isAuthenticated) {
+      router.push("/");
     }
-  }, [isInitialized, isAuthenticated, router]);
+  }, [isAuthenticated, router]);
 
-  return isInitialized && isAuthenticated ? (
+  return isAuthenticated ? (
     <React.Fragment>{children}</React.Fragment>
   ) : (
     <React.Fragment />
