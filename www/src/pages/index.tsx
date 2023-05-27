@@ -29,10 +29,10 @@ const Wrapper = styled(Paper)`
 `;
 
 function SignIn() {
-    const {isAuthenticated} = useAuth();
+    const {isAuthenticated, user} = useAuth();
     const router = useRouter();
     if (isAuthenticated) {
-        router.push("/dashboard/default");
+        router.push("/models");
     }
 
     return (

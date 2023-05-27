@@ -51,23 +51,13 @@ const SidebarFooter = ({ ...rest }) => {
             }}
             variant="dot"
           >
-            {!!user && <Avatar alt={user.displayName} src={user.avatar} />}
-            {/* Demo data */}
-            {!user && (
-              <Avatar
-                alt="Lucy Lavender"
-                src="/static/img/avatars/avatar-1.jpg"
-              />
-            )}
+            {!!user && <Avatar alt={user.name} src={user.picture} />}
           </FooterBadge>
         </Grid>
         <Grid item>
           {!!user && (
-            <FooterText variant="body2">{user.displayName}</FooterText>
+            <FooterText variant="body2">{user.name}</FooterText>
           )}
-          {/* Demo data */}
-          {!user && <FooterText variant="body2">Lucy Lavender</FooterText>}
-          <FooterSubText variant="caption">UX Designer</FooterSubText>
         </Grid>
       </Grid>
     </Footer>

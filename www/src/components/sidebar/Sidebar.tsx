@@ -51,12 +51,10 @@ const Brand = styled(ListItemButton)<
   }
 `;
 
-const BrandIcon = styled(Logo)`
+const BrandIcon = styled.img`
   margin-right: ${(props) => props.theme.spacing(2)};
-  color: ${(props) => props.theme.sidebar.header.brand.color};
-  fill: ${(props) => props.theme.sidebar.header.brand.color};
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
 `;
 
 const BrandChip = styled(Chip)`
@@ -91,13 +89,14 @@ export interface SidebarProps {
   showFooter?: boolean;
 }
 
+const logo = "/static/img/logo_digimans.png";
 const Sidebar = ({ items, showFooter = true, ...rest }: SidebarProps) => {
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand component={Link} href="/">
-        <BrandIcon />{" "}
+        <BrandIcon src={logo} />{" "}
         <Box ml={1}>
-          Mira <BrandChip label="PRO" />
+          DigiTextures <BrandChip label="Beta" />
         </Box>
       </Brand>
       <SidebarNav items={items} />
