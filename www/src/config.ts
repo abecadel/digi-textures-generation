@@ -18,7 +18,7 @@ interface auth0ConfigType {
 export const auth0Config: auth0ConfigType = {
     clientId: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID || "",
     domain: process.env.NEXT_PUBLIC_AUTH0_DOMAIN || "",
-    redirect_url: "localhost:3000/" || "",
+    redirect_url: process.env.NEXT_PUBLIC_REDIRECT_URL || "localhost:3000/",
 };
 
 export const cognitoConfig = {

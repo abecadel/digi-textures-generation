@@ -14,7 +14,7 @@ function AuthProvider({children}: { children: ReactNode }) {
             authorizationParams={{
                 redirect_uri: "http://localhost:3000/models",
             }}
-        >
+         >
             {children}
         </Auth0Provider>
     );
