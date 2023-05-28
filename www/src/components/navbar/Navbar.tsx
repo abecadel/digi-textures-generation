@@ -97,15 +97,6 @@ function Navbar({ onDrawerToggle }: NavbarProps) {
                 <MenuIcon />
               </IconButton>
             </Grid>
-            <Grid item>
-              <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                {/* @ts-ignore */}
-                <Input placeholder={t("Search")} />
-              </Search>
-            </Grid>
             <Grid item xs />
             <Grid item>
               <NavbarNotificationsDropdown />

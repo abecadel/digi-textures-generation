@@ -38,6 +38,7 @@ const FooterBadge = styled(Badge)`
 
 const SidebarFooter = ({ ...rest }) => {
   const { user } = useAuth();
+  console.log(user);
 
   return (
     <Footer {...rest}>

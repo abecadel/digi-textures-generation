@@ -9,10 +9,11 @@ import shadows from "./shadows";
 
 const createTheme = (name: string) => {
   let themeConfig = variants.find((variant) => variant.name === name);
+    themeConfig = variants[1];
 
   if (!themeConfig) {
     console.warn(new Error(`The theme ${name} is not valid`));
-    themeConfig = variants[0];
+    themeConfig = variants[1];
   }
 
   return createMuiTheme(

@@ -1,9 +1,7 @@
 import type {ReactElement} from "react";
 import React from "react";
 import styled from "@emotion/styled";
-import NextLink from "next/link";
 import {Helmet} from "react-helmet-async";
-import AuthGuard from "../components/guards/AuthGuard";
 
 import {
     Breadcrumbs as MuiBreadcrumbs,
@@ -22,9 +20,8 @@ const Card = styled(MuiCard)(spacing);
 
 const Divider = styled(MuiDivider)(spacing);
 
-const Breadcrumbs = styled(MuiBreadcrumbs)(spacing);
 
-function EmptyCard() {
+function ModelCard() {
     return (
         <Card mb={6}>
             <CardContent>
@@ -39,39 +36,39 @@ function EmptyCard() {
     );
 }
 
-function Blank() {
+function Models() {
     return (
         <React.Fragment>
-            <AuthGuard>
-                <Helmet title="Blank"/>
+                <Helmet title="Models"/>
                 <Typography variant="h3" gutterBottom display="inline">
-                    Blank
+                    Models
                 </Typography>
-
-                <Breadcrumbs aria-label="Breadcrumb" mt={2}>
-                    <Link component={NextLink} href="/">
-                        Dashboard
-                    </Link>
-                    <Link component={NextLink} href="/">
-                        Pages
-                    </Link>
-                    <Typography>Blank</Typography>
-                </Breadcrumbs>
 
                 <Divider my={6}/>
 
                 <Grid container spacing={6}>
-                    <Grid item xs={12}>
-                        <EmptyCard/>
+                    <Grid item xs={4}>
+                        <ModelCard/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <ModelCard/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <ModelCard/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <ModelCard/>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <ModelCard/>
                     </Grid>
                 </Grid>
-            </AuthGuard>
         </React.Fragment>
     );
 }
 
-Blank.getLayout = function getLayout(page: ReactElement) {
+Models.getLayout = function getLayout(page: ReactElement) {
     return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default Blank;
+export default Models;

@@ -32,6 +32,11 @@ function NavbarUserDropdown() {
     setAnchorMenu(null);
   };
 
+  const handleProfile = async () => {
+    setAnchorMenu(null);
+    router.push("/profile");
+  };
+
   const handleSignOut = async () => {
     await logout();
     router.push("/");
@@ -56,7 +61,7 @@ function NavbarUserDropdown() {
         open={Boolean(anchorMenu)}
         onClose={closeMenu}
       >
-        <MenuItem onClick={closeMenu}>Profile</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
         <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
       </Menu>
     </React.Fragment>

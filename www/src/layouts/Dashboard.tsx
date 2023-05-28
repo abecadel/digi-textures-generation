@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import React, {useEffect, useState} from "react";
+import {useRouter} from "next/router";
 import styled from "@emotion/styled";
-import { Outlet } from "react-router-dom";
+import {Outlet} from "react-router-dom";
 
-import { Box, CssBaseline, Paper as MuiPaper } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import {Box, CssBaseline, Paper as MuiPaper} from "@mui/material";
+import {useTheme} from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { spacing } from "@mui/system";
+import {spacing} from "@mui/system";
 
 import GlobalStyle from "../components/GlobalStyle";
 import Navbar from "../components/navbar/Navbar";
 import dashboardItems from "../components/sidebar/dashboardItems";
 import Sidebar from "../components/sidebar/Sidebar";
 import Footer from "../components/Footer";
-import Settings from "../components/Settings";
 
 const drawerWidth = 258;
 
@@ -52,56 +51,56 @@ const MainContent = styled(Paper)`
 `;
 
 interface DashboardType {
-  children?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-const Dashboard: React.FC<DashboardType> = ({ children }) => {
-  const router = useRouter();
-  const [mobileOpen, setMobileOpen] = useState(false);
+const Dashboard: React.FC<DashboardType> = ({children}) => {
+    const router = useRouter();
+    const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
 
-  // Close mobile menu when navigation occurs
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [router.asPath]);
+    // Close mobile menu when navigation occurs
+    useEffect(() => {
+        setMobileOpen(false);
+    }, [router.asPath]);
 
-  const theme = useTheme();
-  const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
+    const theme = useTheme();
+    const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
-  return (
-    <Root>
-      <CssBaseline />
-      <GlobalStyle />
-      <Drawer>
-        <Box sx={{ display: { xs: "block", lg: "none" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            items={dashboardItems}
-          />
-        </Box>
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            items={dashboardItems}
-          />
-        </Box>
-      </Drawer>
-      <AppContent>
-        <Navbar onDrawerToggle={handleDrawerToggle} />
-        <MainContent p={isLgUp ? 12 : 5}>
-          {children}
-          <Outlet />
-        </MainContent>
-        <Footer />
-      </AppContent>
-    </Root>
-  );
+    return (
+        <Root>
+                <CssBaseline/>
+                <GlobalStyle/>
+                <Drawer>
+                    <Box sx={{display: {xs: "block", lg: "none"}}}>
+                        <Sidebar
+                            PaperProps={{style: {width: drawerWidth}}}
+                            variant="temporary"
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
+                            items={dashboardItems}
+                        />
+                    </Box>
+                    <Box sx={{display: {xs: "none", md: "block"}}}>
+                        <Sidebar
+                            PaperProps={{style: {width: drawerWidth}}}
+                            items={dashboardItems}
+                        />
+                    </Box>
+                </Drawer>
+                <AppContent>
+                    <Navbar onDrawerToggle={handleDrawerToggle}/>
+                    <MainContent p={isLgUp ? 12 : 5}>
+                        {children}
+                        <Outlet/>
+                    </MainContent>
+                    <Footer/>
+                </AppContent>
+        </Root>
+    );
 };
 
 export default Dashboard;
