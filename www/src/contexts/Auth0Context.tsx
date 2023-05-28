@@ -12,7 +12,7 @@ function AuthProvider({children}: { children: ReactNode }) {
             domain={auth0Config.domain}
             clientId={auth0Config.clientId}
             authorizationParams={{
-                redirect_uri: "http://localhost:3000/models",
+                redirect_uri: "http://localhost:3000/welcome",
             }}
          >
             {children}

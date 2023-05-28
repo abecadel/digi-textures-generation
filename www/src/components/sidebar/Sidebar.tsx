@@ -96,7 +96,7 @@ const Sidebar = ({ items, showFooter = true, ...rest }: SidebarProps) => {
       <Brand component={Link} href="/">
         <BrandIcon src={logo} />{" "}
         <Box ml={1}>
-          DigiTextures <BrandChip label="Beta" />
+          Digimans.ai <BrandChip label="Beta" />
         </Box>
       </Brand>
       <SidebarNav items={items} />

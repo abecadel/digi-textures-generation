@@ -32,7 +32,7 @@ function SignIn() {
     const {isAuthenticated, user} = useAuth();
     const router = useRouter();
     if (isAuthenticated) {
-        router.push("/models");
+        router.push("/welcome");
     }
 
     return (

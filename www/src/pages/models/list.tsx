@@ -4,17 +4,15 @@ import styled from "@emotion/styled";
 import {Helmet} from "react-helmet-async";
 
 import {
-    Breadcrumbs as MuiBreadcrumbs,
     Card as MuiCard,
     CardContent,
     Divider as MuiDivider,
     Grid,
-    Link,
     Typography,
 } from "@mui/material";
 import {spacing} from "@mui/system";
 
-import DashboardLayout from "../layouts/Dashboard";
+import DashboardLayout from "../../layouts/Dashboard";
 
 const Card = styled(MuiCard)(spacing);
 
@@ -36,10 +34,10 @@ function ModelCard() {
     );
 }
 
-function Models() {
+function List() {
     return (
         <React.Fragment>
-                <Helmet title="Models"/>
+                <Helmet title="Model list"/>
                 <Typography variant="h3" gutterBottom display="inline">
                     Models
                 </Typography>
@@ -67,8 +65,8 @@ function Models() {
     );
 }
 
-Models.getLayout = function getLayout(page: ReactElement) {
+List.getLayout = function getLayout(page: ReactElement) {
     return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default Models;
+export default List;
