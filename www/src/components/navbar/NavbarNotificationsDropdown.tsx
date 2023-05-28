@@ -130,7 +130,7 @@ function NavbarNotificationsDropdown() {
             />
           </List>
           <Box p={1} display="flex" justifyContent="center">
-            <Button component={Link} href="/" size="small">
+            <Button component={Link} href="/notifications" size="small">
               Show all notifications
             </Button>
           </Box>
