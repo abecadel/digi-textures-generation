@@ -3,6 +3,7 @@ Sub-modules are designed to accomplish a single high-level task.
 'main.py' script integrates all sub-modules to make the framework end-to-end.
 
 'main.py' integrates the sub-modules in the order of:  
+
     - image_generator : With given segmented shape and its render images (segmentation, normals, depth, render view), 
                         it generates a novel appearance by utilizing Stable Diffusion + ControlNet and given user prompt.  
 
