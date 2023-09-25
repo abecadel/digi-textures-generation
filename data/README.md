@@ -5,34 +5,33 @@ This 'data' module contains all the data needed for modules under '/app/'.
 'data/preprocess' sub-module process raw data to be ready-to-use by 'app/garmet_generator' module.
 
 DIRECTORY CONFIGURATION:
-\n    'app/data/shapes':
-\n>                    -> shape_{0}
-\n>>                                -> images
-\n>>>                                        -> shape_0_SEGMENTATION.png
-\n>>>                                        -> shape_0_DEPTH.png
-\n>>>                                        -> shape_0_RENDER.png
-\n>>>                                        -> shape_0_NORMALS.png
-\n>                    .
-\n>                    .
-\n>                    .
-\n>                    .
+    'app/data/shapes':  
+                    -> shape_{0}  
+                                -> images  
+                                        -> shape_0_SEGMENTATION.png  
+                                        -> shape_0_DEPTH.png  
+                                        -> shape_0_RENDER.png  
+                                        -> shape_0_NORMALS.png  
+                    .  
+                    .  
+                    .  
+                    .  
 
-\n>                    -> shape_{n}
+                    -> shape_{n}  
 
-    
-\n    'app/data/materials':
-\n>                    -> database
-\n>>                                -> stores all files related to create materials database
-\n>>                                -> material_{0}
-\n>>>                                                -> material_0_basecolor.png
-\n>>>                                                -> material_0_normals.png
-\n>>>                                                -> material_0_displacement.png
-\n>>>                                                -> material_0_metalness.png
-\n>>>                                                -> material_0_roughness.png
-\n>>>                                                -> material_0_ao.png
-\n>>>                                .
-\n>>>                                .
-\n>>>                                .
-\n>>>                                .
-\n>>>                                .
-\n>>>                                -> material_{n}
+    'app/data/materials':  
+                    -> database  
+                                -> stores all files related to create materials database  
+                                -> material_{0}  
+                                                -> material_0_basecolor.png  
+                                                -> material_0_normals.png  
+                                                -> material_0_displacement.png  
+                                                -> material_0_metalness.png  
+                                                -> material_0_roughness.png  
+                                                -> material_0_ao.png  
+                                .  
+                                .  
+                                .  
+                                .  
+                                .  
+                                -> material_{n}  
