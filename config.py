@@ -2,6 +2,12 @@ from pathlib import Path
 
 use_cuda : bool = True
 
+######################## Data Generation ######################
+DATA_ROOT = Path("data")
+SHAPES_ROOT = DATA_ROOT / "shapes"
+MATERIALS_ROOT = DATA_ROOT / "materials"
+###############################################################
+
 ######################## Image Generator ######################
 CONTROLNET_CANNY_PATH = Path("diffusers/controlnet-canny-sdxl-1.0")
 CONTROLNET_DEPTH_PATH = Path("diffusers/controlnet-depth-sdxl-1.0")
@@ -40,5 +46,14 @@ control_seg_cond_scale : float = 0.5
 # controlnet - normals
 control_normals = False
 control_normals_cond_scale : float = 0.5
+
+###############################################################
+
+
+###################### Material Prediction ####################
+
+###############################################################
+
+####################### Material Transfer #####################
 
 ###############################################################

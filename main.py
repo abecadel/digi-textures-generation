@@ -19,6 +19,9 @@ control_image_paths = []
 
 # Output of generate function is {'images': images, 'nsfw_info' : nsfw_info}
 results = sdxl_controlnet.generate(control_image_paths, prompt=prompt, negative_prompt=negative_prompt)
+images = results['images']
+nsfw_info = results['nsfw_info']    # TODO [Cem] - Make use of nsfw as a feature in the future.
+
 
 ####################################################################################
 
