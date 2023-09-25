@@ -5,6 +5,7 @@ This 'data' module contains all the data needed for modules under '/app/'.
 'data/preprocess' sub-module process raw data to be ready-to-use by 'app/garmet_generator' module.
 
 DIRECTORY CONFIGURATION:
+
     'app/data/shapes':  
                     -> shape_{0}  
                                 -> images  
