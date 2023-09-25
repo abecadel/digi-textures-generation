@@ -1,8 +1,3 @@
-.ipynb_checkpoints
-.idea
-datasets/
-test.py
-results/
-notebooks/resultAnalysis/FashionFormerResults/
-notebooks/resultAnalysis/FashionpediaAnnotations/
-dr_results/
+*.ipynb_checkpoints
+*.idea
+*.pyc

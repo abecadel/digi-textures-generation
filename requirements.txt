@@ -11,3 +11,6 @@ loguru
 tqdm
 einops
 opencv-python
+bpy
+bpy_extras
+mathutils
