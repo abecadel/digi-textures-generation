@@ -7,7 +7,7 @@ import os
 from glob import glob
 from pathlib import Path
 
-ROOT_SHAPES_PATH = Path('LOCAL-PATH-TO-SHAPES-TO-BE-RENDERED/')
+ROOT_SHAPES_PATH = 'LOCAL-PATH-TO-SHAPES-TO-BE-RENDERED/'
 BLENDER_EXEC_PATH = Path('LOCAL-PATH-TO-BLENDER-EXEC/')
 BLENDER_RENDER_SCRIPT_PATH = os.path.join(os.path.dirname(__file__), 'generate_rendering.py')
 FILE_FORMAT = "obj"
