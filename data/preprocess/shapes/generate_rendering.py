@@ -38,8 +38,8 @@ import random
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 # Imports to run this script in a loop
-import argparse
-
+from argparse import ArgumentParser
+from pathlib import Path
 
 ############################## HELPER FUNCTIONS ################################################
 def random_color_generator(n_item):
@@ -122,17 +122,33 @@ def GenerateSegmentationImage(mat_name, color, shadow_mode='NONE'):
 ###############################################################################################
 
 ######################### INPUTS  #############################################################
-OBJECT_PATH = "/home/cem/Desktop/GarmentGenerator/sample/upperbody143.obj"          # TODO [Cem] : Implement argparser
-ROOT_PATH = "/home/cem/Desktop/GarmentGenerator/"                                   # TODO [Cem] : Implement argparser
-FOCAL_LENGTH = 54                                                                   # TODO [Cem] : Implement argparser
-CAM_ARGS = [90,0]                                                                   # TODO [Cem] : Implement argparser
+parser = ArgumentParser(
+    prog="Blender Rendering Of Objects",
+    description="This script is to render given 3D object from angles  \
+    to generate 3D aware images of objects to be used in Stable Diffusion for noval look generation"
+)
+parser.add_argument("--shape", required=True, type=Path)
+parser.add_argument("--root", required=True, type=Path)
+parser.add_argument("--focal_length", required=True, type=int)
+parser.add_argument("--cam_args", required=True, type=list)
+parser.add_argument("--sample_count", required=False, default=1024)
+parser.add_argument("--render_engine", required=False, default="CYCLES")
+parser.add_argument("--img_res", required=False, default=1024)
+parser.add_argument("--device", required=False, default="GPU")
 
-bpy.context.scene.render.engine = 'CYCLES'
-bpy.context.scene.cycles.samples = 1024                                             # TODO [Cem] : Implement argparser
-bpy.context.scene.cycles.device = 'GPU'
+args = parser.parse_args()
+
+SHAPE_PATH = args.shape
+ROOT_PATH = args.root
+FOCAL_LENGTH =  args.focal_legth
+CAM_ARGS = args.cam_args
+
+bpy.context.scene.render.engine =  args.render_engine
+bpy.context.scene.cycles.samples = args.sample_count
+bpy.context.scene.cycles.device =  args.device
 
 # Set out rendered image size:
-RENDER_IMAGE_RESOLUTION = 1024                                                      # TODO [Cem] : Implement argparser
+RENDER_IMAGE_RESOLUTION = args.img_res
 bpy.context.scene.render.resolution_x = RENDER_IMAGE_RESOLUTION
 bpy.context.scene.render.resolution_y = RENDER_IMAGE_RESOLUTION
 bpy.context.scene.render.film_transparent = True
@@ -155,7 +171,7 @@ except:
     print("NO light object exists")
 
 # Import the object
-bpy.ops.import_scene.obj(filepath=OBJECT_PATH, axis_forward='Y', axis_up='Z')
+bpy.ops.import_scene.obj(filepath=SHAPE_PATH, axis_forward='Y', axis_up='Z')
 # Save imported objects for layer coordinate mapping
 objects = [obj for obj in bpy.data.objects if obj.type == 'MESH']
 print(objects)
@@ -178,7 +194,7 @@ links.new(render_layers.outputs['Image'], alpha_node.inputs[2])
 links.new(alpha_node.outputs['Image'], output_node_img.inputs[0])
 
 # set output path.
-output_node_img.base_path = OBJECT_PATH.replace('sample/upperbody143.obj', 'output/')   # TODO [Cem] : Implement path invariant.
+output_node_img.base_path = SHAPE_PATH.replace('sample/upperbody143.obj', 'output/')   # TODO [Cem] : Implement path invariant.
 if not os.path.exists(output_node_img.base_path):
     os.makedirs(output_node_img.base_path)
     
