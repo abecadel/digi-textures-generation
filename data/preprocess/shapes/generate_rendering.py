@@ -129,19 +129,28 @@ parser = ArgumentParser(
 )
 parser.add_argument("--shape", required=True, type=Path)
 parser.add_argument("--root", required=True, type=Path)
+parser.add_argument("--output", required=True, type=str)
 parser.add_argument("--focal_length", required=True, type=int)
-parser.add_argument("--cam_args", required=True, type=list)
+parser.add_argument("--cam_x", required=True, type=int)
+parser.add_argument("--cam_y", required=True, type=int)
 parser.add_argument("--sample_count", required=False, default=1024)
 parser.add_argument("--render_engine", required=False, default="CYCLES")
 parser.add_argument("--img_res", required=False, default=1024)
 parser.add_argument("--device", required=False, default="GPU")
 
-args = parser.parse_args()
+try:
+    args = parser.parse_args()
+except Exception as e:
+    print(f"Error at parsing arguments for 'generate_rendering.py' file with given error log : {e}")
 
 SHAPE_PATH = args.shape
 ROOT_PATH = args.root
-FOCAL_LENGTH =  args.focal_legth
-CAM_ARGS = args.cam_args
+FOCAL_LENGTH =  args.focal_length
+CAM_ARGS = [args.cam_x, args.cam_y]
+
+# Save the filename to create a new folder to store all rendered images
+FILENAME = args.shape.split("/")[-1].split('.')[0]
+OUTPUT_PATH = args.output + "/" + FILENAME
 
 bpy.context.scene.render.engine =  args.render_engine
 bpy.context.scene.cycles.samples = args.sample_count
@@ -171,7 +180,10 @@ except:
     print("NO light object exists")
 
 # Import the object
-bpy.ops.import_scene.obj(filepath=SHAPE_PATH, axis_forward='Y', axis_up='Z')
+if 'obj' in SHAPE_PATH:
+    bpy.ops.import_scene.obj(filepath=SHAPE_PATH, axis_forward='Y', axis_up='Z')
+elif 'glb' in SHAPE_PATH:
+    bpy.ops.import_scene.gltf(filepath=SHAPE_PATH)
 # Save imported objects for layer coordinate mapping
 objects = [obj for obj in bpy.data.objects if obj.type == 'MESH']
 print(objects)
@@ -194,7 +206,7 @@ links.new(render_layers.outputs['Image'], alpha_node.inputs[2])
 links.new(alpha_node.outputs['Image'], output_node_img.inputs[0])
 
 # set output path.
-output_node_img.base_path = SHAPE_PATH.replace('sample/upperbody143.obj', 'output/')   # TODO [Cem] : Implement path invariant.
+output_node_img.base_path = OUTPUT_PATH
 if not os.path.exists(output_node_img.base_path):
     os.makedirs(output_node_img.base_path)
     
@@ -294,7 +306,7 @@ limit = 0.1
 selected = 0
 not_selected = 0
 discarded = 0
-with open(ROOT_PATH + 'output/' + 'vertexToPixCoordinates.txt', 'w') as file:
+with open(OUTPUT_PATH + '/' + 'vertexToPixCoordinates.txt', 'w') as file:
     scene = bpy.context.scene
     for obj in objects:
         file.write(str(obj))
